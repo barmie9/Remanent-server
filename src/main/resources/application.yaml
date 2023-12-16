@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/remanent
+    username: myusername
+    password: mypassword
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update # Mo?esz zmieni? na "create" w trybie deweloperskim, aby tworzy? tabele przy ka?dym uruchomieniu (validate,update,create)
+    show-sql: true # W??cz wy?wietlanie zapyta? SQL w konsoli (dobrze w trybie deweloperskim)
+  database-platform: org.hibernate.dialect.PostgreSQLDialect
+
