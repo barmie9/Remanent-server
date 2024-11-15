@@ -34,7 +34,7 @@ public class ProductController {
     private boolean isWebOpen = false;
     WebDriver driver;
 
-    @GetMapping("/api/product/{eanCode}")
+    @GetMapping("/api/product/{eanCode}") // TODO usunąć mechanizm pobierania z internetu danych "getProductFromWeb()"
     public ResponseEntity<Product> getProductByCode(@PathVariable String eanCode){
         Product product = productService.getProductByCode(eanCode);
         if(product != null){
@@ -43,17 +43,17 @@ public class ProductController {
         else
         {
             Product webProduct = getProductFromWeb(eanCode);
-            return ResponseEntity.ok(webProduct);
+            return ResponseEntity.ok(webProduct); // TODO Zwrócić odpowiednią wartość w przypadku braku praduktu w bazie
         }
 
 
     }
 
-    @PostMapping("/api/add-product")
-    public ResponseEntity<ProductStatus> addProduct(@RequestBody ProductStatusRequest productStatusRequest){
-//        String response = productService.addProduct(productStatusRequest);
-        return ResponseEntity.ok(productService.addProduct(productStatusRequest));
-    }
+//    @PostMapping("/api/add-product")
+//    public ResponseEntity<ProductStatus> addProduct(@RequestBody ProductStatusRequest productStatusRequest){ //TODO do poprawy
+////        String response = productService.addProduct(productStatusRequest);
+//        return ResponseEntity.ok(productService.addProduct(productStatusRequest));
+//    }
 
     @GetMapping("/api/get-product-from-web/{eanCode}")
     public Product getProductFromWeb(@PathVariable String eanCode) {
@@ -114,57 +114,57 @@ public class ProductController {
 //            return "Page Title: " + strName + " - "+ strBrandName +" - " +  strCategory;
     }
 
-    @GetMapping("/api/make-raport")
-    public ResponseEntity<HashMap<String,String>> makeRaport(){
-
-        List<ProductStatus> productStatus = productStatusRepository.findAllByOrderByName().orElse(null);
-        HashMap<String,String> response = new HashMap<>();
-
-        if(productStatus == null){
-            response.put("response","BLAD - PUSTA LISTA");
-            ResponseEntity.ok(response);
-        }
-
-        int length = productStatus.size();
-        try {
-            // Tworzenie nowego arkusza i pliku
-            WritableWorkbook workbook = Workbook.createWorkbook(new File("RAPORTY/"+String.valueOf(length) + "-raport.xls"));
-            WritableSheet sheet = workbook.createSheet("Sheet1", 0);
-
-            // Dodawanie zawartości
-            Label label = new Label(0, 0, "NAZWA");
-            sheet.addCell(label);
-            label = new Label(1, 0, "JEDNOSTKA");
-            sheet.addCell(label);
-            label = new Label(2, 0, "ILOSC");
-            sheet.addCell(label);
-            label = new Label(3, 0, "CENA");
-            sheet.addCell(label);
-            for(int i=1 ; i<=length; i++){
-                ProductStatus product = productStatus.get(i-1);
-                label = new Label(0, i, product.getName());
-                sheet.addCell(label);
-                label = new Label(1, i, product.getNetContentUnit());
-                sheet.addCell(label);
-                label = new Label(2, i, product.getQuantity());
-                sheet.addCell(label);
-                label = new Label(3, i, product.getPrice());
-                sheet.addCell(label);
-            }
-
-
-            // Zapis do pliku
-            workbook.write();
-            workbook.close();
-            response.put("response","OK");
-        } catch (Exception e) {
-            e.printStackTrace();
-            response.put("response","BLAD ZAPISU");
-        }
-
-
-        return ResponseEntity.ok(response);
-    }
+//    @GetMapping("/api/make-raport") // TODO do poprawy (zmiana tabel w DB)
+//    public ResponseEntity<HashMap<String,String>> makeRaport(){
+//
+//        List<ProductStatus> productStatus = productStatusRepository.findAllByOrderByName().orElse(null);
+//        HashMap<String,String> response = new HashMap<>();
+//
+//        if(productStatus == null){
+//            response.put("response","BLAD - PUSTA LISTA");
+//            ResponseEntity.ok(response);
+//        }
+//
+//        int length = productStatus.size();
+//        try {
+//            // Tworzenie nowego arkusza i pliku
+//            WritableWorkbook workbook = Workbook.createWorkbook(new File("RAPORTY/"+String.valueOf(length) + "-raport.xls"));
+//            WritableSheet sheet = workbook.createSheet("Sheet1", 0);
+//
+//            // Dodawanie zawartości
+//            Label label = new Label(0, 0, "NAZWA");
+//            sheet.addCell(label);
+//            label = new Label(1, 0, "JEDNOSTKA");
+//            sheet.addCell(label);
+//            label = new Label(2, 0, "ILOSC");
+//            sheet.addCell(label);
+//            label = new Label(3, 0, "CENA");
+//            sheet.addCell(label);
+//            for(int i=1 ; i<=length; i++){
+//                ProductStatus product = productStatus.get(i-1);
+//                label = new Label(0, i, product.getName());
+//                sheet.addCell(label);
+//                label = new Label(1, i, product.getNetContentUnit());
+//                sheet.addCell(label);
+//                label = new Label(2, i, product.getQuantity());
+//                sheet.addCell(label);
+//                label = new Label(3, i, product.getPrice());
+//                sheet.addCell(label);
+//            }
+//
+//
+//            // Zapis do pliku
+//            workbook.write();
+//            workbook.close();
+//            response.put("response","OK");
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            response.put("response","BLAD ZAPISU");
+//        }
+//
+//
+//        return ResponseEntity.ok(response);
+//    }
 
     public void openWeb(){
 

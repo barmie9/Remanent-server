@@ -23,32 +23,32 @@ public class ProductService {
         else return null;
     }
 
-    public ProductStatus addProduct(ProductStatusRequest productStatusRequest){
-
-        ProductStatus productStatus = new ProductStatus();
-        productStatus.setName(productStatusRequest.getName());
-        productStatus.setPrice(productStatusRequest.getPrice());
-        productStatus.setQuantity(productStatusRequest.getQuantity());
-        productStatus.setBrandName(productStatusRequest.getBrandName());
-        productStatus.setNetContentUnit(productStatusRequest.getNetContentUnit());
-        productStatus.setYear(Year.now().getValue());
-
-        ProductStatus productStatusResponse =  productStatusRepository.save(productStatus);
-
-        Product product =  productRepository.findByEanCode(productStatusRequest.getEanCode()).orElse(null);
-        if(product == null){
-            Product newProduct = new Product();
-            newProduct.setName(productStatusRequest.getName());
-            newProduct.setPrice(productStatusRequest.getPrice());
-            newProduct.setBrandName(productStatusRequest.getBrandName());
-            newProduct.setCategory(productStatusRequest.getCategory());
-            newProduct.setEanCode(productStatusRequest.getEanCode());
-            newProduct.setNetContentUnit(productStatusRequest.getNetContentUnit());
-            productRepository.save(newProduct);
-        }
-
-
-        return productStatusResponse;
-    }
+//    public ProductStatus addProduct(ProductStatusRequest productStatusRequest){ //TODO do poprawy przez zmiany w DB
+//
+//        ProductStatus productStatus = new ProductStatus();
+//        productStatus.setName(productStatusRequest.getName());
+//        productStatus.setPrice(productStatusRequest.getPrice());
+//        productStatus.setQuantity(productStatusRequest.getQuantity());
+//        productStatus.setBrandName(productStatusRequest.getBrandName());
+//        productStatus.setNetContentUnit(productStatusRequest.getNetContentUnit());
+//        productStatus.setYear(Year.now().getValue());
+//
+//        ProductStatus productStatusResponse =  productStatusRepository.save(productStatus);
+//
+//        Product product =  productRepository.findByEanCode(productStatusRequest.getEanCode()).orElse(null);
+//        if(product == null){
+//            Product newProduct = new Product();
+//            newProduct.setName(productStatusRequest.getName());
+//            newProduct.setPrice(productStatusRequest.getPrice());
+//            newProduct.setBrandName(productStatusRequest.getBrandName());
+//            newProduct.setCategory(productStatusRequest.getCategory());
+//            newProduct.setEanCode(productStatusRequest.getEanCode());
+//            newProduct.setNetContentUnit(productStatusRequest.getNetContentUnit());
+//            productRepository.save(newProduct);
+//        }
+//
+//
+//        return productStatusResponse;
+//    }
 
 }
