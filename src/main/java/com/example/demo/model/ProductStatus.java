@@ -14,7 +14,7 @@ public class ProductStatus {
     private Long id;
     //private String name;
     private String quantity;
-    private String netPrice;
+    private Double netPrice;
     //private String brandName;
     private Integer year;
     //private String netContentUnit;

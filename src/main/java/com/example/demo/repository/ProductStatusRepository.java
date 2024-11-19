@@ -11,4 +11,6 @@ import java.util.Optional;
 public interface ProductStatusRepository extends JpaRepository<ProductStatus,Long> {
 
 //    Optional<List<ProductStatus>> findAllByOrderByName();
+    Optional<List<ProductStatus>> findAllByYear(Integer year);
+
 }

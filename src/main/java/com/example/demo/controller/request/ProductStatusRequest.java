@@ -8,7 +8,7 @@ import lombok.Setter;
 public class ProductStatusRequest {
     private String name;
     private String quantity;
-    private String price;
+    private Double price; // zmiana typu ze String na Double
     private String brandName;
     private String category;
     private String eanCode;

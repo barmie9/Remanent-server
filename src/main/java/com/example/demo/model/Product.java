@@ -22,5 +22,5 @@ public class Product {
     private String brandName;
     private Integer netContent;
     private String netContentUnit;
-    private String price;
+    private Double price;
 }
