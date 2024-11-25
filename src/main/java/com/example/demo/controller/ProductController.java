@@ -1,18 +1,20 @@
 package com.example.demo.controller;
 
+import com.example.demo.controller.dto.ProductStatusResponseMapper;
 import com.example.demo.controller.request.ProductStatusRequest;
+import com.example.demo.controller.response.ProductStatusResponse;
 import com.example.demo.model.Product;
 import com.example.demo.model.ProductStatus;
 import com.example.demo.repository.ProductStatusRepository;
 import com.example.demo.service.ProductService;
 import lombok.RequiredArgsConstructor;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
+//import net.bytebuddy.asm.Advice;
+//import org.openqa.selenium.By;
+//import org.openqa.selenium.WebElement;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
 import jxl.Workbook;
 import jxl.write.Label;
@@ -24,6 +26,7 @@ import java.io.File;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -54,6 +57,22 @@ public class ProductController {
     public ResponseEntity<ProductStatus> addProduct(@RequestBody ProductStatusRequest productStatusRequest){ //TODO do poprawy. ok?
         return ResponseEntity.ok(productService.addProduct(productStatusRequest));
     }
+
+    @GetMapping("/api/products/{year}")
+    public ResponseEntity<List<ProductStatusResponse>> getProductsStatus(@PathVariable Integer year){
+        var productsStatus = productService.getProductsStatus(year);
+        var productStatusResponse = ProductStatusResponseMapper.mapToProductStatusResponses(productsStatus);
+        return ResponseEntity.ok(productStatusResponse);
+    }
+
+    @DeleteMapping("api/delete-product/{productId}")
+    public ResponseEntity<Map<String, String>> deleteProductStatus(@PathVariable Long productId) {
+        String response = productService.deleteProductStatus(productId);
+        Map<String, String> jsonResponse = new HashMap<>();
+        jsonResponse.put("message", response);
+        return ResponseEntity.ok(jsonResponse);
+    }
+
 
     @GetMapping("/api/make-raport/{year}") // TODO do poprawy (zmiana tabel w DB)
     public ResponseEntity<HashMap<String,String>> makeRaport(@PathVariable Integer year){

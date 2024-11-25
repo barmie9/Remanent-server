@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.controller.request.ProductStatusRequest;
+import com.example.demo.controller.response.ProductStatusResponse;
 import com.example.demo.model.Product;
 import com.example.demo.model.ProductStatus;
 import com.example.demo.repository.ProductRepository;
@@ -9,6 +10,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.Year;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -56,4 +59,19 @@ public class ProductService {
 
     }
 
+    public List<ProductStatus> getProductsStatus(Integer year) {
+        return productStatusRepository.findAllByYear(year).orElse(new ArrayList<ProductStatus>());
+
+    }
+
+    public String deleteProductStatus(Long productId) {
+        ProductStatus productStatus = productStatusRepository.findById(productId).orElse(null);
+
+        if(productStatus == null)
+            return "ERROR: productStatus not found by id: " + productId;
+        else {
+            productStatusRepository.delete(productStatus);
+            return "OK";
+        }
+    }
 }
