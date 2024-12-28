@@ -21,6 +21,7 @@ public class ProductStatus {
     private Double netPrice;
     //private String brandName;
     private Integer year;
+    private String employeeName;
     //private String netContentUnit;
 
     @ManyToOne

@@ -51,6 +51,7 @@ public class ProductService {
         productStatus.setYear(Year.now().getValue()); // TODO do poprawy co gdyby, ktoś robił renament z opóźnieniem np 1 stycznia
         productStatus.setNetPrice(productStatusRequest.getPrice());
         productStatus.setProduct(product);
+        productStatus.setEmployeeName(productStatusRequest.getEmployeeName());
 
 
 

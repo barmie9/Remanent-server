@@ -13,6 +13,7 @@ public class ProductStatusRequest {
     private String category;
     private String eanCode;
     private String netContentUnit;
+    private String employeeName;
 
 
 }
