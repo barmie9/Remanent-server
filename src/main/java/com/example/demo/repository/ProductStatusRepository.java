@@ -12,5 +12,7 @@ public interface ProductStatusRepository extends JpaRepository<ProductStatus,Lon
 
 //    Optional<List<ProductStatus>> findAllByOrderByName();
     Optional<List<ProductStatus>> findAllByYear(Integer year);
+    Optional<List<ProductStatus>> findAllByYearOrderByIdDesc(Integer year);
+
 
 }

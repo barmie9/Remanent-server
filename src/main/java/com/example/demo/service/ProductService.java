@@ -61,7 +61,7 @@ public class ProductService {
     }
 
     public List<ProductStatus> getProductsStatus(Integer year) {
-        return productStatusRepository.findAllByYear(year).orElse(new ArrayList<ProductStatus>());
+        return productStatusRepository.findAllByYearOrderByIdDesc(year).orElse(new ArrayList<ProductStatus>());
 
     }
 
